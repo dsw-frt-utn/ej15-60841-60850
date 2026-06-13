@@ -19,7 +19,7 @@ public class PersistenciaInMemory : IPersistence
     public static async Task<PersistenciaInMemory> InitializeDataAsync()
     {
         var persistencia = new PersistenciaInMemory();
-        persistencia.InitializeDoctors();
+        await persistencia.InitializeDoctors();
         return persistencia;
     }
     public async Task InitializeDoctors()
