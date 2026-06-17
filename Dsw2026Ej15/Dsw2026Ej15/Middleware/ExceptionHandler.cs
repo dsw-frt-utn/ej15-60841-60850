@@ -1,14 +1,15 @@
-﻿namespace Dsw2026Ej15.Api.Middleware;
+﻿using Dsw2026Ej15.Domain.Exceptions;
+namespace Dsw2026Ej15.Api.Middleware;
 
 public static class ExceptionHandler
 {
     public static async Task HandleExceptionAsync(HttpContext context, Exception ex)
     {
         context.Response.ContentType = "application/json";
-        if (ex is Exception ve)
+        if (ex is ValidationException ve)
         {
             context.Response.StatusCode = 400;
-            await context.Response.WriteAsync("{\error\": \"ValidationException\"}");
+            await context.Response.WriteAsync($"{{\"error\": \"{ve.Message}\"}}");
         }
         else
         {
