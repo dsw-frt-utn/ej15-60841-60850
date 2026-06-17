@@ -7,13 +7,13 @@ public class Doctor : BaseEntity
     public bool IsActive { get; set; }
     public Speciality Speciality { get; set; }
 
-    public Doctor(Guid id,string name, string licenseNumber,bool active, Speciality speciality)
+    public Doctor(Guid id,string name, string licenseNumber,Speciality speciality, bool active = false)
         : base(id)
     {
         Name = name;
         LicenseNumber = licenseNumber;
-        IsActive = active;
         Speciality = speciality;
+        IsActive = active;
     }
 
 }
