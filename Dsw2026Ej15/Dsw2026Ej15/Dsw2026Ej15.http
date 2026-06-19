@@ -3,7 +3,3 @@
 POST {{Dsw2026Ej15_HostAddress}}/api/doctors
 Accept: application/json
 
-{
-    "cualquier cosa menos algo coherente"
-}
-###
