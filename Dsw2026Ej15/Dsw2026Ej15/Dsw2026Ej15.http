@@ -1,0 +1,5 @@
+@Dsw2026Ej15_HostAddress = http://localhost:5299
+
+POST {{Dsw2026Ej15_HostAddress}}/api/doctors
+Accept: application/json
+
