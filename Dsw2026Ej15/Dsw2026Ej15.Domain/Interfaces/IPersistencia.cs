@@ -9,8 +9,8 @@ public interface IPersistencia
 {
     Task<bool> AgregarMedicoAsync(Doctor doctor);
     Task<Doctor?> GetDoctorAsync(Guid id);
-    Task<List<Doctor>> GetDoctorsListAsync();
-    Task<List<Speciality>> GetSpecialitiesListAsync();
+    Task<IEnumerable<Doctor>> GetDoctorsListAsync();
+    Task<IEnumerable<Speciality>> GetSpecialitiesListAsync();
     Task<Speciality?> GetSpecialityAsync(Guid id);
     Task<bool> DeleteDoctorAsync(Guid id);
 }

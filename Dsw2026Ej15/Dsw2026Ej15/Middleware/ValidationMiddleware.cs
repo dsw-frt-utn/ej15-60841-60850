@@ -15,7 +15,7 @@ public class ValidationMiddleware
         {
             await _next(context);
         }
-        catch(ValidationException ex)
+        catch(Exception ex)
         {
             await ExceptionHandler.HandleExceptionAsync(context, ex);
         }

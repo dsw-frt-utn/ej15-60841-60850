@@ -1,12 +1,9 @@
 @Dsw2026Ej15_HostAddress = http://localhost:5299
 
 POST {{Dsw2026Ej15_HostAddress}}/api/doctors
-Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Dr. House",
-  "licenseNumber": "MN-12345",
-  "specialityId": "00000000-0000-0000-0000-000000000000"
+    "cualquier cosa menos algo coherente"
 }
 ###

@@ -19,13 +19,6 @@ public class PersistenciaInMemory : IPersistencia
     {
         Initialize();
     }
-
-    //public static async Task<PersistenciaInMemory> InitializeDataAsync()
-    //{
-    //    var persistencia = new PersistenciaInMemory();
-    //    await persistencia.InitializeDoctors();
-    //    return persistencia;
-    //}
     private void Initialize()
     {
         InitializeSpecialities();
@@ -57,7 +50,7 @@ public class PersistenciaInMemory : IPersistencia
         {
             foreach (var data in specialitiesData)
             {
-                Speciality s = new Speciality(data.id,data.name, data.description);
+                Speciality s = new Speciality(data.Id,data.Name, data.Description);
                 Specialities.Add(s);
             }
         }
@@ -66,7 +59,11 @@ public class PersistenciaInMemory : IPersistencia
     {
         string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", $"{file}.json");
         string jsonContent = File.ReadAllText(jsonPath);
-        return JsonSerializer.Deserialize<List<T>>(jsonContent);
+        return JsonSerializer.Deserialize<List<T>>(jsonContent,
+            new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            }) ?? [];
     }
 
     public async Task<bool> AgregarMedicoAsync(Doctor doctor)
@@ -86,11 +83,11 @@ public class PersistenciaInMemory : IPersistencia
         return Doctors.Find(d => d.Id == id);
     }
 
-    public async Task<List<Doctor>> GetDoctorsListAsync()
+    public async Task<IEnumerable<Doctor>> GetDoctorsListAsync()
     {
         return Doctors;
     }
-    public async Task<List<Speciality>> GetSpecialitiesListAsync()
+    public async Task<IEnumerable<Speciality>> GetSpecialitiesListAsync()
     {
         return Specialities;
     }
@@ -101,18 +98,12 @@ public class PersistenciaInMemory : IPersistencia
     public async Task<bool> DeleteDoctorAsync(Guid id)
     { 
         var medico = Doctors.Find(d => d.Id == id);
-        if(medico is null)
-        {
-            return false;
-        }
-        if(medico.IsActive == false)
-        {
-            return false;
-        }
-        else
+        if (medico != null)
         {
             medico.IsActive = false;
             return true;
         }
+        return false;
+
     }
 }

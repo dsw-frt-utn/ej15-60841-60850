@@ -9,7 +9,7 @@ namespace Dsw2026Ej15.Api.Controllers;
 
 [ApiController]
 [Route("api/doctors")]
-public class DoctorsController : Controller
+public class DoctorsController : ControllerBase
 {
 	private readonly IPersistencia _persistencia;
 
@@ -20,34 +20,36 @@ public class DoctorsController : Controller
 
 	// POST: insertar un nuevo médico
 	[HttpPost]
-	public async Task<IActionResult> InsertNewDoctor([FromBody] DoctorDto dto)
+	public async Task<IActionResult> InsertNewDoctor([FromBody] DoctorDto.Request dto)
 	{
 		var sp = await _persistencia.GetSpecialityAsync(dto.SpecialityId);
-        if(sp is null)
+    if(sp is null)
 		{
-            throw new ValidationException("Error: no existe la especialidad");
+				throw new ValidationException("Error: no existe la especialidad");
 		}
 		var d = new Doctor(Guid.NewGuid(), dto.Name, dto.LicenseNumber, sp);
-        return await _persistencia.AgregarMedicoAsync(d) ? Created() : throw new ValidationException("Error: No se pudo agregar el Medico");
+    return await _persistencia.AgregarMedicoAsync(d) ? Created() : throw new ValidationException("Error: No se pudo agregar el Medico");
 	}
+
 	// GET: listar los doctores
 	[HttpGet]
 	public async Task<IActionResult> GetAllDoctors()
 	{
 		return Ok(await _persistencia.GetDoctorsListAsync());
 	}
+
 	// GET: obtener un doctor
 	[HttpGet("{id}")]
-	public async Task<IActionResult> GetDoctorFromId(Guid id)
+	public async Task<IActionResult> GetDoctorFromId([FromBody] DoctorDto.Response dto)
 	{
-		var medico = await _persistencia.GetDoctorAsync(id);
-        return medico is null ? throw new ValidationException($"No se encontro o no esta activo, el medico de id: {id}") : Ok(medico);
+		var medico = await _persistencia.GetDoctorAsync(dto.Id);
+    return medico is null ? throw new ValidationException($"No se encontro o no esta activo, el Medico de id: {dto.Id}") : Ok(medico);
 	}
+
 	// DELETE: baja logica del medico
 	[HttpDelete("{id}")]
 	public async Task<IActionResult> DeleteDoctorFromId(Guid id)
 	{
-        return await _persistencia.DeleteDoctorAsync(id) ? NoContent() : throw new ValidationException("No esta activo o no se encontro el Medico");
+		return await _persistencia.DeleteDoctorAsync(id) ? NoContent() : throw new ValidationException("No esta activo o no se encontro el Medico");
 	}
-
 }

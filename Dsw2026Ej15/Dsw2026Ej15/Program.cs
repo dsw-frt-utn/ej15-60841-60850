@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<IPersistencia, PersistenciaInMemory>();
+builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -17,10 +19,12 @@ app.UseMiddleware<ValidationMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    
 }
-
 app.UseHttpsRedirection();
+app.MapHealthChecks("/health-check");
 
 app.UseAuthorization();
 
