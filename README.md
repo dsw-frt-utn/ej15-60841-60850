@@ -1,6 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/xxk7tiN_)
 # Ejercicio N° 15
 ## Desarrollo de Software
-## 60841 - Ferrari Osado, Bautista
-## 60850 - Tenreyro, Juan Eduardo
-## 3K04 - 2026
+### 60841 - Ferrari Osado, Bautista
+### 60850 - Tenreyro, Juan Eduardo
+### 3K04 - 2026
